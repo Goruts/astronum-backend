@@ -4,7 +4,7 @@ services:
     container_name: astronum_postgres_testing
     restart: always
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:5432"
     environment:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -19,7 +19,7 @@ services:
     container_name: astronum_redis_testing
     restart: always
     ports:
-      - "6380:6379"
+      - "${REDIS_PORT}:6379"
     volumes:
       - astronum_redis_data_testing:/data 
 
@@ -28,7 +28,7 @@ services:
     container_name: astronum_pgadmin_testing
     restart: always
     ports:
-      - "8080:80"
+      - "${PGADMIN_PORT}:80"
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
