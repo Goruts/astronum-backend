@@ -1,0 +1,45 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: astronum_postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - astronum_data:/var/lib/postgresql/data
+    networks:
+      - astronum_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: astronum_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - astronum_redis_data:/data 
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: astronum_pgadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    depends_on:
+      - postgres
+    networks:
+      - astronum_network
+
+networks:
+  astronum_network:
+
+volumes:
+  astronum_data:
+  astronum_redis_data:
