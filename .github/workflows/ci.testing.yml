@@ -28,6 +28,6 @@ jobs:
         run: pnpm run build
 
       - name: Deploy Trigger
-        if: success() && github.ref == 'refs/heads/master'
+        if: success() && github.ref == 'refs/heads/testing'
         run: |
-          curl -X POST "${{secrets.DOKPLOY_WEBHOOK_URL}}"
+          curl -X POST "${{secrets.DOKPLOY_WEBHOOK_TEST}}"

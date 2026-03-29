@@ -30,4 +30,4 @@ jobs:
       - name: Deploy Trigger
         if: success() && github.ref == 'refs/heads/master'
         run: |
-          curl -X POST "${{secrets.DOKPLOY_WEBHOOK_URL}}"
+          curl -X POST "${{secrets.DOKPLOY_WEBHOOK_PROD}}"
