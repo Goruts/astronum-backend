@@ -1,0 +1,33 @@
+name: Astronum Backend CI
+on:
+  push:
+    branches: [testing]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instal pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10.33.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 25.8.2
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Deploy Trigger
+        if: success() && github.ref == 'refs/heads/master'
+        run: |
+          curl -X POST "${{secrets.DOKPLOY_WEBHOOK_URL}}"
