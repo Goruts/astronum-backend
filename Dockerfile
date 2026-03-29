@@ -2,7 +2,7 @@ FROM node:25.8.2-slim AS builder
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+RUN npm install -g pnpm@9
 
 WORKDIR /app
 
@@ -17,9 +17,11 @@ RUN pnpm run build
 FROM node:25.8.2-slim AS runner
 
 WORKDIR /app
-ENV NODE_EVN=production
+ENV NODE_ENV=production 
 
-RUN corepack enable
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN npm install -g pnpm@9
 
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/pnpm-lock.yaml ./
