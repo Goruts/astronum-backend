@@ -8,6 +8,6 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ResultInterceptor());
   app.setGlobalPrefix('/api/v1');
 
-  await app.listen(process.env.SERVER_PORT ?? 3000);
+  await app.listen(process.env.SERVER_PORT ?? 3000, "0.0.0.0");
 }
 bootstrap();
