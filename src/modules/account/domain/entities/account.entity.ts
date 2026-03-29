@@ -29,6 +29,13 @@ export class Account {
   })
   password!: string;
 
+  @Column({
+    name: "otp",
+    length: 8,
+    nullable: true,
+  })
+  otp?: string;
+
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamptz',
