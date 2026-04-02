@@ -6,6 +6,7 @@ import { ModuleConfig } from './core/config/module-config.config';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Database } from './core/config/database.config';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -13,6 +14,11 @@ import { Database } from './core/config/database.config';
     TypeOrmModule.forRootAsync(Database.config),
     AccountModule,
   ],
-  providers: [{ provide: APP_INTERCEPTOR, useClass: ResultInterceptor }],
+  controllers: [
+    AppController,
+  ],
+  providers: [
+    { provide: APP_INTERCEPTOR, useClass: ResultInterceptor }
+  ],
 })
-export class AppModule {}
+export class AppModule { }
