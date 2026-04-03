@@ -8,6 +8,16 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ResultInterceptor());
   app.setGlobalPrefix('/api/v1');
 
+  app.enableCors({
+    origin: [
+      "https://hopp.goruts.com",
+      "https://admin-hopp.goruts.com",
+    ],
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  });
   await app.listen(process.env.SERVER_PORT ?? 3000, "0.0.0.0");
 }
 bootstrap();
