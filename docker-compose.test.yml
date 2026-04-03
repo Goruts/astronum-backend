@@ -16,12 +16,15 @@ services:
 
   redis:
     image: redis:7-alpine
+    command: redis-server --requirepass ${REDIS_PASSWORD}
     container_name: astronum_redis_testing
     restart: always
     ports:
       - "${REDIS_PORT}:6379"
     volumes:
       - astronum_redis_data_testing:/data 
+    networks:
+      - astronum_network_testing
 
   pgadmin:
     image: dpage/pgadmin4:latest
