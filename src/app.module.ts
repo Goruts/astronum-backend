@@ -7,12 +7,20 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Database } from './core/config/database.config';
 import { AppController } from './app.controller';
+import { CacheModule } from "@nestjs/cache-manager"
+import { Cache } from './core/config/cache.config';
+import { BullModule } from '@nestjs/bullmq';
+import { Bull } from './core/config/bull.config';
+import { MailerModule } from './modules/mailer/mailer.module';
 
 @Module({
   imports: [
+    CacheModule.register(Cache.config),
+    BullModule.forRootAsync(Bull.config),
     ConfigModule.forRoot(ModuleConfig.setup),
     TypeOrmModule.forRootAsync(Database.config),
     AccountModule,
+    MailerModule,
   ],
   controllers: [
     AppController,
